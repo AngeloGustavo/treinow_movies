@@ -62,8 +62,8 @@ class _DetalhesPageState extends State<DetalhesPage> {
               padding: const EdgeInsets.all(8.0),
               child: Text(filme.title, style: const TextStyle(color: Colors.white, fontSize: 40),  textAlign: TextAlign.center,),
             ),
-            Text(filme.releaseDate.substring(0,4), style: const TextStyle(color: Colors.white, fontSize: 20)),
-            Text('${filme.getNomeGenero()}', style: const TextStyle(color: Colors.white, fontSize: 15)),
+            Text(filme.releaseDate, style: const TextStyle(color: Colors.white, fontSize: 20)),
+            Text(filme.genre, style: const TextStyle(color: Colors.white, fontSize: 15)),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(
@@ -111,11 +111,11 @@ Widget atorBox(Ator ator){
     width: 110,
     child: Column(
       children: [
-        (ator.imagemPath != null) ? Image.network('https://www.themoviedb.org/t/p/w138_and_h175_face/'+ator.imagemPath!, height: 125, width: 100,) : Container(height: 125, width: 100, color: Colors.grey, child: Icon(Icons.person),),
+        (ator.imagemPath != null) ? Image.network('https://image.tmdb.org/t/p/w500/'+ator.imagemPath!, height: 135, width: 100, fit: BoxFit.fitWidth,) : Container(height: 135, width: 100, color: Colors.grey, child: Icon(Icons.person),),
         Column(
           children: [
-            Text(ator.nome, style: const TextStyle(color: Colors.white, fontSize: 10),),
-            Text(ator.personagem, style: const TextStyle(color: Colors.grey, fontSize: 10),)
+            Text(ator.nome, style: const TextStyle(color: Colors.white, fontSize: 10), textAlign: TextAlign.center,),
+            Text(ator.personagem, style: const TextStyle(color: Colors.grey, fontSize: 10), textAlign: TextAlign.center,)
           ],
         ),
       ],

@@ -4,7 +4,7 @@ import 'ator.dart';
 import 'requisicao.dart';
 
 class Filme {
-  Filme(this.id, this.title, this.voteAverage, this.releaseDate, this.overview, this.posterPath, this.backdropPath, this.genreId);
+  Filme(this.id, this.title, this.voteAverage, this.releaseDate, this.overview, this.posterPath, this.backdropPath, this.backdropOriginalPath, this.genre);
 
   int id;
   String title;
@@ -13,7 +13,8 @@ class Filme {
   String overview;
   String posterPath;
   String backdropPath;
-  int genreId;
+  String backdropOriginalPath;
+  String genre;
   List<Ator> elenco = [];
   static List<Filme> filmesPopulares = [];
   static List<Filme> filmesBemAvaliados = [];
@@ -35,7 +36,16 @@ class Filme {
     textoFilme = await requisicao.getFilmesPopulares();
     filler = json.decode(textoFilme.toString());
     for (var e in filler['results']) {
-      Filme filme = Filme(e['id'], e['title'], (e['vote_average']).toDouble(), e['release_date'], e['overview'], 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2'+e['poster_path'], 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2'+e['backdrop_path'],e['genre_ids'][0]);
+      Filme filme = Filme(
+        (e['id']), 
+        (e['title']), 
+        (e['vote_average']).toDouble(), 
+        ((e['release_date'].length)>4 ? (e['release_date']).substring(0,4):''), 
+        (e['overview']), 
+        (e['poster_path'] != null)? "https://image.tmdb.org/t/p/w500${e['poster_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+        (e['backdrop_path'] != null)? "https://image.tmdb.org/t/p/w500${e['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+        (e['backdrop_path'] != null)? "https://image.tmdb.org/t/p/original${e['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+        (e['genre_ids'].isNotEmpty? getNomeGenero(e['genre_ids'][0]):''));
       textoElenco = await requisicao.getElenco(filme.id);
       var filler2 = json.decode(textoElenco.toString());
       for (var j in filler2['cast']) {
@@ -47,7 +57,16 @@ class Filme {
     textoFilme = await requisicao.getFilmesBemAvaliados();
     filler = json.decode(textoFilme.toString());
     for (var e in filler['results']) {
-      Filme filme = Filme(e['id'], e['title'], (e['vote_average']).toDouble(), e['release_date'], e['overview'], 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2'+e['poster_path'], 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2'+e['backdrop_path'],e['genre_ids'][0]);
+      Filme filme = Filme(
+        (e['id']), 
+        (e['title']), 
+        (e['vote_average']).toDouble(), 
+        ((e['release_date'].length)>4 ? (e['release_date']).substring(0,4):''), 
+        (e['overview']), 
+        (e['poster_path'] != null)? "https://image.tmdb.org/t/p/w500${e['poster_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+        (e['backdrop_path'] != null)? "https://image.tmdb.org/t/p/w500${e['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+        (e['backdrop_path'] != null)? "https://image.tmdb.org/t/p/original${e['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg',
+        (e['genre_ids'].isNotEmpty? getNomeGenero(e['genre_ids'][0]):''));
       textoElenco = await requisicao.getElenco(filme.id);
       var filler2 = json.decode(textoElenco.toString());
       for (var j in filler2['cast']) {
@@ -59,7 +78,16 @@ class Filme {
     textoFilme = await requisicao.getFilmesEmBreve();
     filler = json.decode(textoFilme.toString());
     for (var e in filler['results']) {
-      Filme filme = Filme(e['id'], e['title'], 0, e['release_date'], e['overview'], 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2'+e['poster_path'], 'https://www.themoviedb.org/t/p/w600_and_h900_bestv2'+e['backdrop_path'],e['genre_ids'][0]);
+      Filme filme = Filme(
+        (e['id']), 
+        (e['title']), 
+        (e['vote_average']).toDouble(), 
+        ((e['release_date'].length)>4 ? (e['release_date']).substring(0,4):''), 
+        (e['overview']), 
+        (e['poster_path'] != null)? "https://image.tmdb.org/t/p/w500${e['poster_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+        (e['backdrop_path'] != null)? "https://image.tmdb.org/t/p/w500${e['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+        (e['backdrop_path'] != null)? "https://image.tmdb.org/t/p/original${e['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg',
+        (e['genre_ids'].isNotEmpty? getNomeGenero(e['genre_ids'][0]):''));
       textoElenco = await requisicao.getElenco(filme.id);
       var filler2 = json.decode(textoElenco.toString());
       for (var j in filler2['cast']) {
@@ -70,13 +98,23 @@ class Filme {
   }
 
   static Future<void> preencherFilmesPesquisa(String pesquisa) async{
+    Filme.filmesPesquisa = [];
     Filme.filmesPesquisa.clear();
     dynamic textoFilme = await requisicao.getResultado(pesquisa);
     dynamic textoElenco;
     var filler = json.decode(textoFilme.toString());
 
     for (var e in filler['results']) {
-      Filme filme = Filme(e['id'], e['title'], 0, e['release_date'], e['overview'], (e['poster_path'] != null)? "https://image.tmdb.org/t/p/original${e['poster_path']}" : '', (e['backdrop_path'] != null)? 'https://image.tmdb.org/t/p/w500'+e['backdrop_path'] : '',e['genre_ids'].length > 0? e['genre_ids'][0] : 12);
+      Filme filme = Filme(
+        (e['id']), 
+        (e['title']), 
+        (0), 
+        ((e['release_date'].length)>4 ? (e['release_date']).substring(0,4):''), 
+        (e['overview']), 
+        (e['poster_path'] != null)? "https://image.tmdb.org/t/p/w500${e['poster_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+        (e['backdrop_path'] != null)? "https://image.tmdb.org/t/p/w500${e['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+        (e['backdrop_path'] != null)? "https://image.tmdb.org/t/p/original${e['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+        (e['genre_ids'].isNotEmpty? getNomeGenero(e['genre_ids'][0]):''));
       textoElenco = await requisicao.getElenco(filme.id);
       var filler2 = json.decode(textoElenco.toString());
       for (var j in filler2['cast']) {
@@ -92,7 +130,7 @@ class Filme {
 
   //Refazer e colocar em Requisicao.dart
   //String getNomeGenero(int IdGenero){ requisicao -> getGenero }
-  String? getNomeGenero(){
+  static String getNomeGenero(int id){
     Map<int,String> listaGenero = {
       12 : "Aventura",
       14 : "Fantasia",
@@ -114,7 +152,9 @@ class Filme {
       10752 : "Guerra",
       10770 : "Série",
     };
-    
-    return listaGenero[genreId];
+    if(listaGenero[id] == null) {
+      return '';
+    }
+    return listaGenero[id]!;
   }
 }

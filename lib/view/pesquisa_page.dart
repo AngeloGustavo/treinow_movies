@@ -16,6 +16,7 @@ class _PesquisaPageState extends State<PesquisaPage> {
   TextEditingController pesquisaController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    Filme.filmesPesquisa = [];
     Filme.filmesPesquisa.clear();
     return Scaffold(
       backgroundColor: Colors.black,
@@ -30,6 +31,7 @@ class _PesquisaPageState extends State<PesquisaPage> {
             children: [
               Expanded(
                 child: TextFormField(
+                  // textInputAction: TextInputAction.search,
                   decoration: const InputDecoration(
                     labelText: 'Busque um filme com alguma palavra chave.',
                     labelStyle: TextStyle(
@@ -76,19 +78,15 @@ Widget filmesEncontrados(BuildContext context,List<Filme> filmesPesquisa){
   return Expanded(
     child: SingleChildScrollView(
       child: Column(children: [
-        Padding(
-          padding: const EdgeInsets.only(top:15, left: 10, bottom: 10),
+        const Padding(
+          padding: EdgeInsets.only(top:15, left: 10, bottom: 10),
           child: Align(
             alignment: Alignment.bottomLeft,
-            child: const Text('Resultados', style: TextStyle(color: Colors.white, fontSize: 20),)
+            child: Text('Principais Resultados', style: TextStyle(color: Colors.white, fontSize: 20),)
           ),
         ),
         for(int i=0; i<filmesPesquisa.length; i++)
-          Row(
-            children: [
-              filmeBox(context, filmesPesquisa[i])
-            ],
-          )
+          filmeBox(context, filmesPesquisa[i])
       ],),
     ),
   );
@@ -103,8 +101,8 @@ Widget filmeBox(BuildContext context, Filme filme){
         ));
     },
     child: Container(
-      margin: EdgeInsets.all(2),
-      color: Color.fromARGB(40, 158, 158, 158),
+      margin: const EdgeInsets.all(2),
+      color: const Color.fromARGB(40, 158, 158, 158),
       child: Row(
         children: [
           Container(  
@@ -116,7 +114,7 @@ Widget filmeBox(BuildContext context, Filme filme){
             ),
             child: Stack(
               children: [
-                filme.backdropPath != '' ? Image.network(filme.backdropPath) : Image.network('https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', width: 140,),
+                Image.network(filme.backdropPath),
                 // Padding(
                 //   padding: const EdgeInsets.only(left: 100, top: 190),
                 //   child: nota((filme.voteAverage*10).round(), 1),
@@ -124,11 +122,16 @@ Widget filmeBox(BuildContext context, Filme filme){
               ],
             ),
           ),
-          Column(
-            children: [
-              Text(filme.title, style: const TextStyle(color: Colors.white, fontSize: 15),),
-              Text((filme.releaseDate).substring(0,4), style: const TextStyle(color: Color.fromARGB(143, 255, 255, 255), fontSize: 10),),
-            ],
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Text(filme.title, style: const TextStyle(color: Colors.white, fontSize: 15), textAlign: TextAlign.center,),
+                  Text(filme.releaseDate, style: const TextStyle(color: Color.fromARGB(143, 255, 255, 255), fontSize: 10),),
+                ],
+              ),
+            ),
           )
         ],
       ),

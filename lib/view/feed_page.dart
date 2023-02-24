@@ -58,46 +58,68 @@ class _FeedPageState extends State<FeedPage> {
               body:  SingleChildScrollView(
                       child: Column(
                         children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 400,
-                            child: Stack(children: [
-                              ShaderMask(
-                                shaderCallback: (Rect bounds) {
-                                  return const LinearGradient(
-                                        begin: Alignment.topCenter,
-                                        end: Alignment.bottomCenter,
-                                        colors: [Colors.white, Color.fromARGB(0, 22, 22, 22)],
-                                      ).createShader(Rect.fromLTRB(0, 0, bounds.width, bounds.height));
-                                },
-                                blendMode: BlendMode.dstIn,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      fit: BoxFit.fitWidth,
-                                      image: NetworkImage(Filme.filmesPopulares[0].backdropPath),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => 
+                                DetalhesPage(Filme.filmesBemAvaliados[1])
+                              ));
+                            },
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width,
+                              height: 400,
+                              child: Stack(children: [
+                                ShaderMask(
+                                  shaderCallback: (Rect bounds) {
+                                    return const LinearGradient(
+                                          begin: Alignment.topCenter,
+                                          end: Alignment.bottomCenter,
+                                          colors: [Colors.white, Color.fromARGB(0, 22, 22, 22)],
+                                        ).createShader(Rect.fromLTRB(0, 0, bounds.width, bounds.height));
+                                  },
+                                  blendMode: BlendMode.dstIn,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        fit: BoxFit.fitHeight,
+                                        image: NetworkImage(Filme.filmesBemAvaliados[1].backdropOriginalPath),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 100),
-                                child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: Image.asset('lib/assets/recomendacao.png', height: 100,)),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(35),
-                                child: Align(
+                                // Padding(
+                                //   padding: const EdgeInsets.only(top: 100),
+                                //   child: Align(
+                                //     alignment: Alignment.topLeft,
+                                //     child: Image.asset('asset/recomendacao.png', height: 100,)),
+                                // ),
+                                Align(
                                   alignment: Alignment.bottomCenter,
-                                  child: Text(
-                                    Filme.filmesPopulares[0].title, 
-                                    textAlign: TextAlign.center,
-                                    style: const TextStyle(color: Colors.white, fontSize: 30),
-                                  )
+                                  child: Padding(
+                                   padding: EdgeInsets.only(top: 300),
+                                   child: Column(
+                                     children: [
+                                       Text(
+                                         Filme.filmesBemAvaliados[1].title, 
+                                         textAlign: TextAlign.center,
+                                         style: const TextStyle(color: Colors.white, fontSize: 30),
+                                       ),
+                                       const Text(
+                                        'Recomendação', 
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(color: Color.fromARGB(169, 255, 255, 255), fontSize: 15, fontStyle: FontStyle.italic),
+                                      ),
+                                     ],
+                                   ),
+                                    //  Text(
+                                    //    'Recomendação', 
+                                    //    textAlign: TextAlign.center,
+                                    //    style: TextStyle(color: Color.fromARGB(169, 255, 255, 255), fontSize: 15, fontStyle: FontStyle.italic),
+                                    //  ),
+                                  ),
                                 ),
-                              ),
-                            ],),
+                              ],),
+                            ),
                           ),
                           listaDeFilmes(context,'Populares', Filme.filmesPopulares),
                           listaDeFilmes(context,'Mais bem avaliados', Filme.filmesBemAvaliados),
@@ -108,9 +130,9 @@ class _FeedPageState extends State<FeedPage> {
           } else {
             return Scaffold(
               body: Container(
-                color: Color.fromARGB(255, 239, 52, 30), 
+                color: const Color.fromARGB(255, 239, 52, 30), 
                 child: Center(
-                  child: Image.asset('lib/assets/logo.png', width: 300,),
+                  child: Image.asset('asset/logo.png', width: 300,),
                 ),
               )
             );
