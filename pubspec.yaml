@@ -27,4 +27,5 @@ flutter:
   assets:
     - asset/recomendacao.png
     - asset/logo.png
+    - asset/logoAppBar.png
     - asset/icone.png

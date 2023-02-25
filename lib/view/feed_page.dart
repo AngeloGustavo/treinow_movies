@@ -21,7 +21,7 @@ class _FeedPageState extends State<FeedPage> {
               backgroundColor: Colors.transparent,
               appBar: AppBar(
                 automaticallyImplyLeading: false,
-                centerTitle: true,
+                title: Image.asset('asset/logoAppBar.png', fit: BoxFit.cover),
                 backgroundColor: Colors.transparent,
                 actions: <Widget>[
                   Padding(
