@@ -4,7 +4,6 @@ import 'package:treinow_movies/view/pesquisa_page.dart';
 import 'detalhes_page.dart';
 import 'log_page.dart';
 import '../model/Filme.dart';
-import '../model/requisicao.dart';
 
 class FeedPage extends StatefulWidget {
   @override
@@ -197,7 +196,6 @@ Widget listaDeFilmes(BuildContext context, String titulo, List<Filme> listaFilme
     ),
   );
 }
-
 Widget filmeBox(Filme filme){
   return Container(  
     height: 180, 

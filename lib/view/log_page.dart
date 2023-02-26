@@ -26,7 +26,13 @@ class _LogPageState extends State<LogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          title: Padding(
+            padding: const EdgeInsets.only(right: 50),
+            child: Center(child: Image.asset('asset/logoAppBar.png', fit: BoxFit.cover)),
+          ),
+        ),
         backgroundColor: Colors.transparent,
         body: Stack(
           children: [
