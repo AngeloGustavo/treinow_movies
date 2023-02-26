@@ -124,6 +124,9 @@ class _LogPageState extends State<LogPage> {
                                       estado = EstadoDaPagina.login;
                                     }
                                     mensagemDeErro="";
+                                    usuarioController.text="";
+                                    senhaController.text="";
+
                                   });
                                 },
                                 child: Text((estado == EstadoDaPagina.login) ? 'Cadastre-se':'Faça Login', style: const TextStyle(color: Colors.blue),textAlign: TextAlign.left,),
