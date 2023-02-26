@@ -1,27 +1,7 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 
 class Requisicao {
   final dio = Dio();
-  
-  Future<bool> login(String usuario, String senha) async {
-    Map data = {
-    'username': usuario,
-    'password': senha,
-    'request_token' : ''
-    };
-    var body = json.encode(data);
-
-    try{var response = await dio.post("https://api.themoviedb.org/3/authentication/token/validate_with_login?api_key=e98cff13f2cac177711c2e10f817d147",
-        data: body
-      );
-      return true;
-    }
-    on Exception{
-      return false;
-    }
-  }
       
   Future<dynamic> getFilmesPopulares() async {
     try{
@@ -71,4 +51,22 @@ class Requisicao {
       return false;
     }
   } 
+
+  Future<dynamic> getFilmeByID(String ID) async{
+    try {
+      var response = await dio.get('https://api.themoviedb.org/3/movie/$ID?api_key=e98cff13f2cac177711c2e10f817d147&language=pt-BR');
+      return response;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<dynamic> getGenres() async{
+    try {
+      var response = await dio.get('https://api.themoviedb.org/3/genre/movie/list?api_key=e98cff13f2cac177711c2e10f817d147&language=pt-BR');
+      return response;
+    } catch (e) {
+      return false;
+    }
+  }
 }

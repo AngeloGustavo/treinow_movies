@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../model/Filme.dart';
 import 'detalhes_page.dart';
+import 'feed_page.dart';
 
 class PesquisaPage extends StatefulWidget {
   String? pesquisa;
@@ -18,58 +19,77 @@ class _PesquisaPageState extends State<PesquisaPage> {
   Widget build(BuildContext context) {
     Filme.filmesPesquisa = [];
     Filme.filmesPesquisa.clear();
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-      ),
-      body: Column(children: [
-        Container(
-          color: Color.fromARGB(73, 158, 158, 158),
-          padding: const EdgeInsets.only(left: 10),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  // textInputAction: TextInputAction.search,
-                  decoration: const InputDecoration(
-                    labelText: 'Busque um filme com alguma palavra chave.',
-                    labelStyle: TextStyle(
-                      color: Color.fromARGB(155, 255, 255, 255),
-                    ),
-                  ),
-                  style: const TextStyle(color: Colors.white),
-                  controller: pesquisaController,
-                ),
-              ),
-              InkWell(
-                child: Container( margin: const EdgeInsets.all(15),child: const Icon(Icons.search, color: Colors.white,)),
-                onTap: () {                      
-                  setState(() {
-                    Navigator.pop(context);
-                    Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => 
-                      PesquisaPage(pesquisaController.text)
-                    ));
-                  });
-                },
-              )
-            ],
+    return WillPopScope(
+      onWillPop: () { 
+        Navigator.pushReplacement<void, void>(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => FeedPage(),
           ),
+        );
+        return Future.value(false);
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+          leading: IconButton(onPressed: ()=> {             
+            Navigator.pushReplacement<void, void>(
+              context,
+              MaterialPageRoute<void>(
+                builder: (BuildContext context) => FeedPage(),
+              ),
+            )          
+          }, icon: const Icon(Icons.arrow_back)),
         ),
-        FutureBuilder(
-          future: Filme.preencherFilmesPesquisa(pesquisa != null ? pesquisa! : ''),
-          builder: (context, snapshot){
-            if(Filme.filmesPesquisa.isNotEmpty) {
-              return filmesEncontrados(context, Filme.filmesPesquisa);
-            } else if(pesquisa == null) {
-              return Container();
-            } else {
-              return const Expanded(child: Center(child: Text('Pesquisando...', style: TextStyle(color: Colors.white),),));
-            }
-          }            
-        )
-      ]),
+        body: Column(children: [
+          Container(
+            color: const Color.fromARGB(73, 158, 158, 158),
+            padding: const EdgeInsets.only(left: 10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      labelText: 'Busque um filme com alguma palavra chave.',
+                      labelStyle: TextStyle(
+                        color: Color.fromARGB(155, 255, 255, 255),
+                      ),
+                    ),
+                    style: const TextStyle(color: Colors.white),
+                    controller: pesquisaController,
+                  ),
+                ),
+                InkWell(
+                  child: Container( margin: const EdgeInsets.all(15),child: const Icon(Icons.search, color: Colors.white,)),
+                  onTap: () {                      
+                    setState(() {
+                      Navigator.pushReplacement<void, void>(
+                        context,
+                        MaterialPageRoute<void>(
+                          builder: (BuildContext context) => PesquisaPage(pesquisaController.text),
+                        ),
+                      );
+                    });
+                  },
+                )
+              ],
+            ),
+          ),
+          FutureBuilder(
+            future: Filme.preencherFilmesPesquisa(pesquisa != null ? pesquisa! : ''),
+            builder: (context, snapshot){
+              if(Filme.filmesPesquisa.isNotEmpty) {
+                return filmesEncontrados(context, Filme.filmesPesquisa);
+              } else if(pesquisa == null) {
+                return Container();
+              } else {
+                return const Expanded(child: Center(child: Text('Pesquisando...', style: TextStyle(color: Colors.white),),));
+              }
+            }            
+          )
+        ]),
+      ),
     );
   }
 }
@@ -97,7 +117,7 @@ Widget filmeBox(BuildContext context, Filme filme){
     onTap: () {
       Navigator.push(context,
         MaterialPageRoute(builder: (context) => 
-          DetalhesPage(filme)
+          DetalhesPage(filme, false)
         ));
     },
     child: Container(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:treinow_movies/model/usuario.dart';
 import 'package:treinow_movies/view/pesquisa_page.dart';
 import 'detalhes_page.dart';
+import 'log_page.dart';
 import '../model/Filme.dart';
 import '../model/requisicao.dart';
 
@@ -28,10 +30,12 @@ class _FeedPageState extends State<FeedPage> {
                     padding: const EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => 
-                            PesquisaPage(null)
-                          ));
+                        Navigator.pushReplacement<void, void>(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (BuildContext context) => PesquisaPage(null),
+                          ),
+                        );
                       },
                       child: const Icon(
                         Icons.search_rounded,
@@ -44,10 +48,23 @@ class _FeedPageState extends State<FeedPage> {
                     padding: const EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
                       onTap: () {
-                        
+                        if(Usuario.logado == false) {
+                          Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => 
+                            const LogPage()
+                          ));
+                        }
+                        else{
+                          setState(() {
+                            Usuario.logado = false;
+                            Usuario.login = '';
+                            Usuario.senha = '';
+                            Usuario.minhaLista = [];
+                          });
+                        }
                       },
-                      child: const Icon(
-                        Icons.account_box_rounded,
+                      child: Icon(
+                        (Usuario.logado == false) ? Icons.account_box_rounded : Icons.exit_to_app,
                         size: 26.0,
                         color: Colors.white,
                       ),
@@ -62,7 +79,7 @@ class _FeedPageState extends State<FeedPage> {
                             onTap: () {
                               Navigator.push(context,
                               MaterialPageRoute(builder: (context) => 
-                                DetalhesPage(Filme.filmesBemAvaliados[1])
+                                DetalhesPage(Filme.filmesBemAvaliados[1], true)
                               ));
                             },
                             child: SizedBox(
@@ -121,6 +138,8 @@ class _FeedPageState extends State<FeedPage> {
                               ],),
                             ),
                           ),
+                          if(Usuario.logado == true && Usuario.minhaLista.isNotEmpty)
+                            listaDeFilmes(context,'Minha Lista', Usuario.minhaLista),
                           listaDeFilmes(context,'Populares', Filme.filmesPopulares),
                           listaDeFilmes(context,'Mais bem avaliados', Filme.filmesBemAvaliados),
                           listaDeFilmes(context,'Próximas Estreias', Filme.filmesProximasEstreias),
@@ -163,10 +182,12 @@ Widget listaDeFilmes(BuildContext context, String titulo, List<Filme> listaFilme
               InkWell(
                 child: filmeBox(filmeSelecionado),
                 onTap:() {
-                  Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => 
-                    DetalhesPage(filmeSelecionado)
-                  ));
+                  Navigator.pushReplacement<void, void>(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (BuildContext context) => DetalhesPage(filmeSelecionado, true),
+                    ),
+                  );
                 },
               ),
             ],
@@ -176,10 +197,7 @@ Widget listaDeFilmes(BuildContext context, String titulo, List<Filme> listaFilme
     ),
   );
 }
-Future<void> caregarFilmes() async {
-  Requisicao requisicoes = Requisicao();
-  // String? filmes = await requisicoes.getFilmes();
-}
+
 Widget filmeBox(Filme filme){
   return Container(  
     height: 180, 
