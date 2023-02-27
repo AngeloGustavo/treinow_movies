@@ -10,7 +10,35 @@ class FeedPage extends StatefulWidget {
   State<FeedPage> createState() => _FeedPageState();
 }
 
-class _FeedPageState extends State<FeedPage> {
+class _FeedPageState extends State<FeedPage> with TickerProviderStateMixin{
+  late AnimationController controller;
+  late Animation colorAnimation;
+  late Animation sizeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Defining controller with animation duration of two seconds
+    controller =  AnimationController(vsync: this, duration: Duration(seconds: 2));
+
+    // Defining both color and size animations
+    sizeAnimation = Tween<double>(begin: 50.0, end: 250.0).animate(CurvedAnimation(parent: controller, curve: Curves.decelerate));
+
+    // Rebuilding the screen when animation goes ahead
+    controller.addListener(() {
+      setState(() {});
+    });
+
+    // Repeat the animation after finish
+    // controller.repeat();
+
+    //For single time
+    controller.forward();
+
+    //Reverses the animation instead of starting it again and repeats
+    //controller.repeat(reverse: true);
+  }
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -78,7 +106,7 @@ class _FeedPageState extends State<FeedPage> {
                             onTap: () {
                               Navigator.push(context,
                               MaterialPageRoute(builder: (context) => 
-                                DetalhesPage(Filme.filmesBemAvaliados[1], true)
+                                DetalhesPage(Filme.filmesProximasEstreias[0], true)
                               ));
                             },
                             child: SizedBox(
@@ -98,7 +126,7 @@ class _FeedPageState extends State<FeedPage> {
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
                                         fit: BoxFit.fitHeight,
-                                        image: NetworkImage(Filme.filmesBemAvaliados[1].backdropOriginalPath),
+                                        image: NetworkImage(Filme.filmesProximasEstreias[0].backdropOriginalPath),
                                       ),
                                     ),
                                   ),
@@ -110,7 +138,7 @@ class _FeedPageState extends State<FeedPage> {
                                    child: Column(
                                      children: [
                                        Text(
-                                         Filme.filmesBemAvaliados[1].title, 
+                                         Filme.filmesProximasEstreias[0].titulo, 
                                          textAlign: TextAlign.center,
                                          style: const TextStyle(color: Colors.white, fontSize: 30),
                                        ),
@@ -139,7 +167,7 @@ class _FeedPageState extends State<FeedPage> {
               body: Container(
                 color: const Color.fromARGB(255, 239, 52, 30), 
                 child: Center(
-                  child: Image.asset('asset/logo.png', width: 300,),
+                  child: Image.asset('asset/logo.png', width: sizeAnimation.value,),
                 ),
               )
             );
@@ -198,7 +226,7 @@ Widget filmeBox(Filme filme){
         Image.network(filme.posterPath, width: 120, height: 180,),
         Align(
           alignment: Alignment.bottomRight,
-          child: SizedBox(height:40,width:40,child: Stack(children: [const Align(alignment:Alignment.center,child: Icon(Icons.circle, color: Color.fromARGB(201, 0, 0, 0), size: 35,)), Align(alignment:Alignment.center,child: Text('${filme.voteAverage.toStringAsFixed(1)}',style: const TextStyle(color: Color.fromARGB(220, 255, 255, 255), fontSize: 15),))],)),
+          child: SizedBox(height:40,width:40,child: Stack(children: [const Align(alignment:Alignment.center,child: Icon(Icons.circle, color: Color.fromARGB(201, 0, 0, 0), size: 35,)), Align(alignment:Alignment.center,child: Text(filme.nota.toStringAsFixed(1),style: const TextStyle(color: Color.fromARGB(220, 255, 255, 255), fontSize: 15),))],)),
         ),
       ],
     ),

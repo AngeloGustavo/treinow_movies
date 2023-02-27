@@ -139,8 +139,8 @@ Widget filmeBox(BuildContext context, Filme filme){
               padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
-                  Text(filme.title, style: const TextStyle(color: Colors.white, fontSize: 15), textAlign: TextAlign.center,),
-                  Text(filme.releaseDate, style: const TextStyle(color: Color.fromARGB(143, 255, 255, 255), fontSize: 10),),
+                  Text(filme.titulo, style: const TextStyle(color: Colors.white, fontSize: 15), textAlign: TextAlign.center,),
+                  Text(filme.ano, style: const TextStyle(color: Color.fromARGB(143, 255, 255, 255), fontSize: 10),),
                 ],
               ),
             ),

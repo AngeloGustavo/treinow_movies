@@ -6,7 +6,7 @@ class Requisicao {
   Future<dynamic> getFilmesPopulares() async {
     try{
       var response = await dio.get("https://api.themoviedb.org/3/movie/popular?api_key=e98cff13f2cac177711c2e10f817d147&language=pt-BR&page=1");      
-      return response; 
+      return response.toString(); 
     }
     on Exception{
       return false; 
@@ -16,7 +16,7 @@ class Requisicao {
   Future<dynamic> getFilmesBemAvaliados() async {
     try{
       var response = await dio.get("https://api.themoviedb.org/3/movie/top_rated?api_key=e98cff13f2cac177711c2e10f817d147&language=pt-BR&page=1");      
-      return response; 
+      return response.toString(); 
     }
     on Exception{
       return false; 
@@ -26,7 +26,7 @@ class Requisicao {
   Future<dynamic> getFilmesEmBreve() async {
     try{
       var response = await dio.get("https://api.themoviedb.org/3/movie/upcoming?api_key=e98cff13f2cac177711c2e10f817d147&language=pt-BR&page=1");      
-      return response; 
+      return response.toString(); 
     }
     on Exception{
       return false; 
