@@ -16,6 +16,7 @@ class Filme {
   String backdropOriginalPath;
   String genero;
   List<Ator> elenco = [];
+  List<String> streamings = [];
   static List<Filme> filmesPopulares = [];
   static List<Filme> filmesBemAvaliados = [];
   static List<Filme> filmesProximasEstreias = [];
@@ -41,7 +42,6 @@ class Filme {
             filler = textoFilmeEmBreve;
         }
         for (var dados in filler['results']) {
-          print(dados['genre']);
           Filme filme = Filme(
             (dados['id']), 
             (dados['title']), 
@@ -51,16 +51,22 @@ class Filme {
             (dados['poster_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['poster_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
             (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
             (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/original${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
-            (getNomeGenero(dados['genre'])));        
+            (dados['genre_ids'] !=null? getNomeGenero(dados['genre_ids'][0]) : '-'));        
           switch (i) {
             case 0:
-              filmesPopulares.add(filme);
+              if(filmesPopulares.length<20) {
+                filmesPopulares.add(filme);
+              }
               break;
             case 1:
-              filmesBemAvaliados.add(filme);
+              if(filmesBemAvaliados.length<20) {
+                filmesBemAvaliados.add(filme);
+              }
               break;
             default:  
-              filmesProximasEstreias.add(filme);
+              if(filmesProximasEstreias.length<20) {
+                filmesProximasEstreias.add(filme);
+              }
           }
         }
       }
@@ -83,7 +89,7 @@ class Filme {
         (dados['poster_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['poster_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
         (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
         (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/original${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
-        (dados['genre']!=null && [0]!=null?getNomeGenero(dados['genre'][0]):''));
+        (dados['genre_ids'] !=null? getNomeGenero(dados['genre_ids'][0]) : '-'));  
       filmesPesquisa.add(filme);
     }
   }
@@ -118,7 +124,7 @@ class Filme {
       (dados['poster_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['poster_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
       (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
       (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/original${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
-      (dados['genre']!=null && [0]!=null?getNomeGenero(dados['genre'][0]):''));
+      (dados['genre_ids'] !=null? getNomeGenero(dados['genre_ids'][0]) : '-'));  
     return filme;
   }
 
@@ -129,7 +135,16 @@ class Filme {
     }      
   }
 
-  //Para agilizar o carregamento das paginas não foi usado a requisição de pegar Genero por Id
+  static Future<void> carregarStreamings(Filme filme) async{
+    var filler = json.decode((await requisicao.getStreamings(filme.id)).toString());
+    if(filler['results']!= null && filler['results']['US']!=null && filler['results']['US']['rent']!=null){
+      for (var j in filler['results']['US']['rent']) {
+        filme.streamings.add(j['logo_path']);
+      } 
+    }
+  }
+
+  //Para agilizar o carregamento das paginas não foi utilizada a requisição de API 'GET /genre/movie/list'
   static String getNomeGenero(int? genreId){
     Map<int,String> listaGenero = {
       12 : "Aventura",
@@ -152,8 +167,8 @@ class Filme {
       10752 : "Guerra",
       10770 : "Série",
     };
-    if(genreId == null || listaGenero[genreId]![0] == null) {
-      return '-';
+    if(genreId == null || listaGenero[genreId] == null) {
+      return '$genreId';
     }
     return listaGenero[genreId]!;
   }

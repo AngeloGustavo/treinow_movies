@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import '../model/Filme.dart';
 import '../model/ator.dart';
 import '../model/usuario.dart';
@@ -154,6 +155,35 @@ class _DetalhesPageState extends State<DetalhesPage> {
                     )  
                   ],
                 ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10),
+                child: Column(children: [
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('Onde assistir', style: TextStyle(color: Colors.white, fontSize: 30))
+                  ),
+                  FutureBuilder(
+                    future: Filme.carregarStreamings(filme),
+                    builder: (context, snapshot) {
+                      if(filme.streamings.isEmpty){
+                        return Container();
+                      }
+                      else {
+                        return SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(children: [
+                            for(int i=0; i<filme.streamings.length; i++)
+                              Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: ClipRRect( borderRadius: BorderRadius.circular(10),child: Image.network('https://image.tmdb.org/t/p/original${filme.streamings[i]}', width: 50,)),
+                              ),
+                          ],),
+                        );
+                      }
+                    }
+                  )
+                ],),
               ),
               Padding(
                 padding: const EdgeInsets.all(10),

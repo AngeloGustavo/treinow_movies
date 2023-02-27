@@ -43,6 +43,17 @@ class Requisicao {
     }
   }
 
+
+  Future<dynamic> getStreamings(int ID) async {
+    try{
+      var response = await dio.get("https://api.themoviedb.org/3/movie/$ID/watch/providers?api_key=e98cff13f2cac177711c2e10f817d147&watch_region=BR");      
+      return response; 
+    }
+    on Exception{
+      return false; 
+    }
+  }
+
   Future<dynamic> getResultado(String pesquisa) async {
     try {
       var response = await dio.get('https://api.themoviedb.org/3/search/movie?api_key=e98cff13f2cac177711c2e10f817d147&language=pt-BR&page=1&include_adult=false&query=$pesquisa');

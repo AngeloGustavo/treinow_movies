@@ -10,35 +10,7 @@ class FeedPage extends StatefulWidget {
   State<FeedPage> createState() => _FeedPageState();
 }
 
-class _FeedPageState extends State<FeedPage> with TickerProviderStateMixin{
-  late AnimationController controller;
-  late Animation colorAnimation;
-  late Animation sizeAnimation;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Defining controller with animation duration of two seconds
-    controller =  AnimationController(vsync: this, duration: Duration(seconds: 2));
-
-    // Defining both color and size animations
-    sizeAnimation = Tween<double>(begin: 50.0, end: 250.0).animate(CurvedAnimation(parent: controller, curve: Curves.decelerate));
-
-    // Rebuilding the screen when animation goes ahead
-    controller.addListener(() {
-      setState(() {});
-    });
-
-    // Repeat the animation after finish
-    // controller.repeat();
-
-    //For single time
-    controller.forward();
-
-    //Reverses the animation instead of starting it again and repeats
-    //controller.repeat(reverse: true);
-  }
+class _FeedPageState extends State<FeedPage>{
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -167,7 +139,7 @@ class _FeedPageState extends State<FeedPage> with TickerProviderStateMixin{
               body: Container(
                 color: const Color.fromARGB(255, 239, 52, 30), 
                 child: Center(
-                  child: Image.asset('asset/logo.png', width: sizeAnimation.value,),
+                  child: Image.asset('asset/logo.png', width: 300,),
                 ),
               )
             );
