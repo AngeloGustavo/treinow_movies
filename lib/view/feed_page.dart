@@ -103,16 +103,10 @@ class _FeedPageState extends State<FeedPage> {
                                     ),
                                   ),
                                 ),
-                                // Padding(
-                                //   padding: const EdgeInsets.only(top: 100),
-                                //   child: Align(
-                                //     alignment: Alignment.topLeft,
-                                //     child: Image.asset('asset/recomendacao.png', height: 100,)),
-                                // ),
                                 Align(
                                   alignment: Alignment.bottomCenter,
                                   child: Padding(
-                                   padding: EdgeInsets.only(top: 300),
+                                   padding: const EdgeInsets.only(top: 300),
                                    child: Column(
                                      children: [
                                        Text(
@@ -127,11 +121,6 @@ class _FeedPageState extends State<FeedPage> {
                                       ),
                                      ],
                                    ),
-                                    //  Text(
-                                    //    'Recomendação', 
-                                    //    textAlign: TextAlign.center,
-                                    //    style: TextStyle(color: Color.fromARGB(169, 255, 255, 255), fontSize: 15, fontStyle: FontStyle.italic),
-                                    //  ),
                                   ),
                                 ),
                               ],),
@@ -207,10 +196,10 @@ Widget filmeBox(Filme filme){
     child: Stack(
       children: [
         Image.network(filme.posterPath, width: 120, height: 180,),
-        // Padding(
-        //   padding: const EdgeInsets.only(left: 100, top: 190),
-        //   child: nota((filme.voteAverage*10).round(), 1),
-        // )
+        Align(
+          alignment: Alignment.bottomRight,
+          child: SizedBox(height:40,width:40,child: Stack(children: [const Align(alignment:Alignment.center,child: Icon(Icons.circle, color: Color.fromARGB(201, 0, 0, 0), size: 35,)), Align(alignment:Alignment.center,child: Text('${filme.voteAverage.toStringAsFixed(1)}',style: const TextStyle(color: Color.fromARGB(220, 255, 255, 255), fontSize: 15),))],)),
+        ),
       ],
     ),
   );

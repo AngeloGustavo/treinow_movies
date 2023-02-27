@@ -132,15 +132,7 @@ Widget filmeBox(BuildContext context, Filme filme){
             decoration: const BoxDecoration(
                 color: Color.fromARGB(255, 50, 50, 50),
             ),
-            child: Stack(
-              children: [
-                Image.network(filme.backdropPath),
-                // Padding(
-                //   padding: const EdgeInsets.only(left: 100, top: 190),
-                //   child: nota((filme.voteAverage*10).round(), 1),
-                // )
-              ],
-            ),
+            child: Image.network(filme.backdropPath),
           ),
           Expanded(
             child: Padding(

@@ -96,22 +96,41 @@ class _DetalhesPageState extends State<DetalhesPage> {
                         });
                       },)),),
                     ),
-                  // Padding(
-                  //   padding: const EdgeInsets.only(top: 240, right: 20),
-                  //   child: Align(
-                  //     alignment: Alignment.bottomRight,
-                  //     child: nota((filme.voteAverage*10).round(), 2)),
-                  // )
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(filme.title, style: const TextStyle(color: Colors.white, fontSize: 40),  textAlign: TextAlign.center,),
-              ),
-              Text(filme.releaseDate, style: const TextStyle(color: Colors.white, fontSize: 20)),
-              Text(filme.genre, style: const TextStyle(color: Colors.white, fontSize: 15)),
-              Padding(
-                padding: const EdgeInsets.all(10.0),
+              Center(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(filme.title, style: const TextStyle(color: Colors.white, fontSize: 40),  textAlign: TextAlign.center,),
+                    ),
+                    Stack(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 10),
+                          child: Center(
+                            child: Column(
+                              children: [
+                                Text(filme.releaseDate, style: const TextStyle(color: Colors.white, fontSize: 20)),
+                                Text(filme.genre, style: const TextStyle(color: Colors.white, fontSize: 15)),    
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 40),
+                          child: Align(
+                            alignment: Alignment.topRight,
+                            child: SizedBox(height:60,width:60,child: Stack(children: [const Align(alignment:Alignment.center,child: Icon(Icons.circle, color: Color.fromARGB(201, 255, 255, 255), size: 60,)), Align(alignment:Alignment.center,child: Text('${filme.voteAverage.toStringAsFixed(1)}',style: const TextStyle(color: Color.fromARGB(220,0,0,0), fontSize: 20, fontWeight: FontWeight.w700),))],)),
+                          ),
+                        ),
+                      ],
+                    ),          
+                  ],
+                ),
+              ),Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15,),
                 child: Column(
                   children: [
                     const Padding(
@@ -151,8 +170,7 @@ class _DetalhesPageState extends State<DetalhesPage> {
   }
 }
 Widget atorBox(Ator ator){
-
-  return Container(
+  return SizedBox(
     height: 200,
     width: 110,
     child: Column(
@@ -168,56 +186,3 @@ Widget atorBox(Ator ator){
     ),
   );
 }
-// Widget nota(int nota, int pagina){
-//   if(pagina == 2) {
-//     return Column(
-//       children: [
-//         Container(
-//           height: 65,
-//           width: 65,
-//           decoration: const BoxDecoration(
-//             image: DecorationImage(
-//               image: AssetImage('images/fundo_nota.png'),
-//               fit: BoxFit.cover,
-//             ),
-//           ),
-//           child: Center(
-//             child: RichText(
-//               text: TextSpan(
-//                 children: <TextSpan>[
-//                   TextSpan(text: ' $nota', style: const TextStyle(fontSize: 32, color: Colors.white, fontWeight: FontWeight.bold)),
-//                   const TextSpan(text: '%', style: TextStyle(fontSize: 15, color: Colors.white, fontWeight: FontWeight.bold))
-//                 ],
-//               ),
-//             ),
-//           )
-//         ),        
-//         const Padding(
-//           padding: EdgeInsets.only(top: 2),
-//           child: Text('Avaliação\ndos usuários', style: TextStyle(color: Colors.white, fontSize: 7.5),textAlign: TextAlign.center,),
-//         ),
-//       ],
-//     );
-//   }
-
-//   return Container(
-//     height: 40,
-//     width: 40,
-//     decoration: const BoxDecoration(
-//       image: DecorationImage(
-//         image: AssetImage('images/fundo_nota.png',),
-//         fit: BoxFit.cover,
-//       ),
-//     ),
-//     child: Center(
-//       child: RichText(
-//         text: TextSpan(
-//           children: <TextSpan>[
-//             TextSpan(text: ' $nota', style: const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold)),
-//             const TextSpan(text: '%', style: TextStyle(fontSize: 8, color: Colors.white, fontWeight: FontWeight.bold))
-//           ],
-//         ),
-//       ),
-//     )
-//   );
-// }

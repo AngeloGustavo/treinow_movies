@@ -21,7 +21,6 @@ class _LogPageState extends State<LogPage> {
   String mensagemDeErro = '';
   bool hidePassword = true;
   EstadoDaPagina estado = EstadoDaPagina.login;
-  
 
   @override
   Widget build(BuildContext context) {

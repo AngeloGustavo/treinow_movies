@@ -33,7 +33,6 @@ class Usuario {
       String a = await file.readAsString();
       var senha = a.split(';');
       if(senha[1] == _senha){
-
         for(int i=2; i<senha.length-1; i++){
           Usuario.minhaLista.add(await Filme.getFilmeByID(senha[i]));
         }

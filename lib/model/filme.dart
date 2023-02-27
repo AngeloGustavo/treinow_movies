@@ -1,7 +1,5 @@
 import 'dart:convert';
-
-import 'package:treinow_movies/model/usuario.dart';
-
+import 'usuario.dart';
 import 'ator.dart';
 import 'requisicao.dart';
 
