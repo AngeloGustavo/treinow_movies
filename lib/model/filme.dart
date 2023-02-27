@@ -51,7 +51,7 @@ class Filme {
             (dados['poster_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['poster_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
             (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
             (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/original${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
-            (dados['genre_ids'] !=null? getNomeGenero(dados['genre_ids'][0]) : '-'));        
+            (dados['genre_ids'] !=null && dados['genre_ids'].isNotEmpty ? getNomeGenero(dados['genre_ids'][0]) : '-'));        
           switch (i) {
             case 0:
               if(filmesPopulares.length<20) {
@@ -89,7 +89,7 @@ class Filme {
         (dados['poster_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['poster_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
         (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
         (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/original${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
-        (dados['genre_ids'] !=null? getNomeGenero(dados['genre_ids'][0]) : '-'));  
+        (dados['genre_ids'] !=null && dados['genre_ids'].isNotEmpty ? getNomeGenero(dados['genre_ids'][0]) : '-'));  
       filmesPesquisa.add(filme);
     }
   }
@@ -124,7 +124,7 @@ class Filme {
       (dados['poster_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['poster_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
       (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
       (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/original${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
-      (dados['genre_ids'] !=null? getNomeGenero(dados['genre_ids'][0]) : '-'));  
+      (dados['genre_ids'] !=null && dados['genre_ids'].isNotEmpty ? getNomeGenero(dados['genre_ids'][0]) : '-'));  
     return filme;
   }
 
