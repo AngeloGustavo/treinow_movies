@@ -16,7 +16,7 @@ Telas de Login e Cadastro com campos de Login e Senha.<br />
 <img src="imagens_readme/cadastro.png" width="200">
 
 ### Pesquisa
-Pagina de pesquisa em utilização após pesquisa por 'Amor'.<br />
+Pagina de pesquisa em utilização após pesquisa por 'Titanic'.<br />
 <img src="imagens_readme/pesquisa.png" width="200">
 
 ### Detalhes
@@ -24,11 +24,15 @@ Tela de detalhamento de filme com titulo, sinopse, gênero principal, 'onde assi
 <img src="imagens_readme/detalhes1.png" width="200">
 <img src="imagens_readme/detalhes2.png" width="200">
 
+### Ator
+Tela com filmes listados do ator.<br />
+<img src="imagens_readme/ator.png" width="200">
+
 ## Código
 Pasta 'lib' <br />
 <img src="imagens_readme/lib.png" width="200"><br />
 ### model
-  ##### <strong><em>Ator</em></strong>: Classe utilizada para listar os atores em Elenco.
+  ##### <strong><em>Ator</em></strong>: Classe utilizada para listar os atores em Elenco e detalhada em AtorPage.
   ##### <strong><em>Filme</em></strong>: Classe utilizada para as listas de filmes e detalhes de filme.
   ##### <strong><em>Requisicao</em></strong>: Classe com os métodos necessários para realizar as requisições na API do TMDB.
   ##### <strong><em>Usuario</em></strong>: Classe utilizada para gerenciar usuarios do aplicativo e sua lista pessoal.
@@ -37,3 +41,4 @@ Pasta 'lib' <br />
   ##### <strong><em>DetalhesPage</em></strong>: Página detalhadora do filme selecionada.
   ##### <strong><em>LogPage</em></strong>: Página com telas de login e de cadastro.
   ##### <strong><em>PesquisaPage</em></strong>: Página para realizar pesquisas de filme.
+  ##### <strong><em>AtorPage</em></strong>: Página com filmes do ator selecionado.
