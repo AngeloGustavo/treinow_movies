@@ -80,4 +80,13 @@ class Requisicao {
       return false;
     }
   }
+
+  Future<dynamic> getFilmesAtor(String ID) async{
+    try {
+      var response = await dio.get('https://api.themoviedb.org/3/person/$ID/movie_credits?api_key=e98cff13f2cac177711c2e10f817d147&language=pt-BR');
+      return response;
+    } catch (e) {
+      return false;
+    }
+  }
 }

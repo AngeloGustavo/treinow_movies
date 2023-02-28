@@ -131,7 +131,7 @@ class Filme {
   static Future<void> carregarElenco(Filme filme) async {
     var filler = json.decode((await requisicao.getElenco(filme.id)).toString());
     for (var j in filler['cast']) {
-      filme.elenco.add(Ator(j['name'], j['character'], j['profile_path']));
+      filme.elenco.add(Ator(j['name'], j['character'], j['profile_path'], j['id']));
     }      
   }
 
@@ -140,6 +140,25 @@ class Filme {
     if(filler['results']!= null && filler['results']['US']!=null && filler['results']['US']['rent']!=null){
       for (var j in filler['results']['US']['rent']) {
         filme.streamings.add(j['logo_path']);
+      } 
+    }
+  }
+
+  static Future<void> carregarFilmesAtor(Ator ator) async{
+    var filler = json.decode((await requisicao.getFilmesAtor('${ator.id}')).toString());
+    if(filler['cast']!= null){
+      for (var dados in filler['cast']) {
+        Filme filme = Filme(
+          (dados['id']), 
+          (dados['title']), 
+          (dados['vote_average']), 
+          ((dados['release_date'].length)>4 ? (dados['release_date']).substring(0,4):''), 
+          (dados['overview']), 
+          (dados['poster_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['poster_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+          (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/w500${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+          (dados['backdrop_path'] != null)? "https://image.tmdb.org/t/p/original${dados['backdrop_path']}" : 'https://i.pinimg.com/736x/3a/11/3f/3a113fe16e48d077df4cdef57a82adea.jpg', 
+          (dados['genre_ids'] !=null && dados['genre_ids'].isNotEmpty ? getNomeGenero(dados['genre_ids'][0]) : '-'));
+        ator.filmes.add(filme);
       } 
     }
   }

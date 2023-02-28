@@ -1,11 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import '../model/Filme.dart';
+import 'package:treinow_movies/view/ator_page.dart';
+import '../model/filme.dart';
 import '../model/ator.dart';
 import '../model/usuario.dart';
 import 'feed_page.dart';
-bool teste = false;
+
 class DetalhesPage extends StatefulWidget {
   bool veioDoFeed;
   Filme filme;
@@ -203,7 +203,7 @@ class _DetalhesPageState extends State<DetalhesPage> {
                           scrollDirection: Axis.horizontal,
                           child: Row(children: [
                             for(int i=0; i<filme.elenco.length; i++)
-                              atorBox(filme.elenco[i]),
+                              atorBox(filme.elenco[i], context),
                           ],),
                         );
                       }
@@ -220,20 +220,28 @@ class _DetalhesPageState extends State<DetalhesPage> {
     );
   }
 }
-Widget atorBox(Ator ator){
-  return SizedBox(
-    height: 200,
-    width: 110,
-    child: Column(
-      children: [
-        (ator.imagemPath != null) ? Image.network('https://image.tmdb.org/t/p/w500/${ator.imagemPath!}', height: 135, width: 100, fit: BoxFit.fitWidth,) : Container(height: 135, width: 100, color: Colors.grey, child: Icon(Icons.person),),
-        Column(
-          children: [
-            Text(ator.nome, style: const TextStyle(color: Colors.white, fontSize: 10), textAlign: TextAlign.center,),
-            Text(ator.personagem, style: const TextStyle(color: Colors.grey, fontSize: 10), textAlign: TextAlign.center,)
-          ],
-        ),
-      ],
+Widget atorBox(Ator ator, BuildContext context){
+  return InkWell(
+    onTap:() {
+       Navigator.push(context,
+        MaterialPageRoute(builder: (context) => 
+          AtorPage(ator)
+        ));
+    },
+    child: SizedBox(
+      height: 200,
+      width: 110,
+      child: Column(
+        children: [
+          (ator.imagemPath != null) ? Image.network('https://image.tmdb.org/t/p/w500/${ator.imagemPath!}', height: 135, width: 100, fit: BoxFit.fitWidth,) : Container(height: 135, width: 100, color: Colors.grey, child: Icon(Icons.person),),
+          Column(
+            children: [
+              Text(ator.nome, style: const TextStyle(color: Colors.white, fontSize: 10), textAlign: TextAlign.center,),
+              Text(ator.personagem, style: const TextStyle(color: Colors.grey, fontSize: 10), textAlign: TextAlign.center,)
+            ],
+          ),
+        ],
+      ),
     ),
   );
 }

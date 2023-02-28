@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'Filme.dart';
+import 'filme.dart';
 import 'package:path_provider/path_provider.dart';
 
 class Usuario {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../model/Filme.dart';
+import '../model/filme.dart';
 import 'detalhes_page.dart';
 import 'feed_page.dart';
 
