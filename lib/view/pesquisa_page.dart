@@ -32,7 +32,10 @@ class _PesquisaPageState extends State<PesquisaPage> {
       child: Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: Colors.black,title: Padding(
+          padding: const EdgeInsets.only(right: 50),
+            child: Center(child: Image.asset('asset/logoAppBar.png', fit: BoxFit.cover)),
+          ),
           leading: IconButton(onPressed: ()=> {             
             Navigator.pushReplacement<void, void>(
               context,

@@ -40,7 +40,10 @@ class _DetalhesPageState extends State<DetalhesPage> {
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          centerTitle: true,
+          title: Padding(
+            padding: const EdgeInsets.only(right: 50),
+            child: Center(child: Image.asset('asset/logoAppBar.png', fit: BoxFit.cover)),
+          ),
           backgroundColor:Colors.transparent,
           leading: IconButton(onPressed: ()=> { 
             if(veioDoFeed == true)            
